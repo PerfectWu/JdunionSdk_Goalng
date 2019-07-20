@@ -14,7 +14,7 @@ type JDSDKAPI interface {
 	GetCategoryList(UriQuery string) *CateGoryResult
 	GetGoodsJFen(param string) *GoodsResult
 	GetOrders(ParamJsons string) *OrderResult
-	//Send(Appid string,AppSecret string)
+	SetSignJointUrlParam(Method string, param string) *Jdsdk
 }
 
 type Param struct {
