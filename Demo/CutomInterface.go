@@ -23,13 +23,13 @@ func (J *JdSdkCutom) NewFunc(UriQuery string) *JdunionSdk.CateGoryResult {
 	urls.WriteString(JdunionSdk.JD_HOST)
 	urls.WriteString(J.SignAndUri)
 	body, _ := JdunionSdk.HttpGet(urls.String())
-	result := &JdunionSdk.Reponse{}
+	result := &JdunionSdk.CategoryResponse{}
 	e := json.Unmarshal([]byte(body), &result)
 	if e != nil {
 		panic(e)
 	}
 	categoryResult := &JdunionSdk.CateGoryResult{}
-	e = json.Unmarshal([]byte(result.Jd_union_open_category_goods_get_response.Result), categoryResult)
+	e = json.Unmarshal([]byte(result.JdUnionOpenCategoryGoodsGetResponse.Result), categoryResult)
 	if e != nil {
 		panic(e)
 	}
@@ -55,11 +55,9 @@ func New(AppKeyCutom, AppSecretCutom string) {
 	JDSDKconfigCutom = J
 }
 
-var AppKeyCutom string = ""    //京东联盟申请的应用 AppKey
-var AppSecretCutom string = "" //京东联盟申请的应用 AppSecret
 var NewJDSdkCutom NewJDSDKAPI
 
 func init() {
-	New(AppKeyCutom, AppSecretCutom)
+	New(APPKEY, APPSECRET)
 	NewJDSdkCutom = JDSDKconfigCutom
 }

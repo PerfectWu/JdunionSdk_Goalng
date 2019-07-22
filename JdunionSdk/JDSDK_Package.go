@@ -9,10 +9,10 @@ const (
 
 //定义接口
 type JDSDKAPI interface {
-	ConversionLink(urls string) *SubunionidResult //链接转换
+	ConversionLink(urls string) *SubUnionIdResult //链接转换
 	GetJdGoods(UriQuery string) *GoodsResult
 	GetCategoryList(UriQuery string) *CateGoryResult
-	GetGoodsJFen(param string) *GoodsResult
+	GetGoodsJFen(param string) *JFRestult
 	GetOrders(ParamJsons string) *OrderResult
 	SetSignJointUrlParam(Method string, param string) *Jdsdk
 }

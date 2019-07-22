@@ -2,11 +2,17 @@ package JdunionSdk
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
 )
 
 //请求业务参数
+
+type OrderParam struct {
+	OrderReq OrderReq `json:"orderReq"`
+}
+
 type OrderReq struct {
 	PageNo       int    `json:"pageNo"`                 //页码，返回第几页结果
 	PageSize     int    `json:"pageSize"`               //每页包含条数，上限为500
@@ -20,7 +26,7 @@ type JdUnionOpenOrderQueryResponse struct {
 	JdUnionOpenOrderQueryResponse struct {
 		Result string `json:"result"`
 		Code   string `json:"code"`
-	} `json:"jd_union_open_order_query_response"`
+	} `json:"jd_union_open_order_query _response"`
 }
 
 type OrderResult struct {
@@ -29,14 +35,14 @@ type OrderResult struct {
 	Message   string `json:"message"`
 	RequestId string `json:"requestId"`
 	Data      []struct {
-		FinishTime int64     `json:"finishTime"` //订单完成时间(时间戳，毫秒)
-		OrderEmt   int       `json:"orderEmt"`   //下单设备(1:PC,2:无线)
-		OrderId    int64     `json:"orderId"`    //订单ID
-		OrderTime  time.Time `json:"orderTime"`  //下单时间(时间戳，毫秒)
-		ParentId   int64     `json:"parentId"`   //父单的订单ID，仅当发生订单拆分时返回， 0：未拆分，有值则表示此订单为子订单
-		PayMonth   string    `json:"payMonth"`   //订单维度预估结算时间（格式：yyyyMMdd），0：未结算，订单的预估结算时间仅供参考。账号未通过资质审核或订单发生售后，会影响订单实际结算时间。
-		Plus       int       `json:"plus"`       //下单用户是否为PLUS会员 0：否，1：是
-		PopId      int       `json:"popId"`      //商家ID
+		FinishTime int64         `json:"finishTime"` //订单完成时间(时间戳，毫秒)
+		OrderEmt   int           `json:"orderEmt"`   //下单设备(1:PC,2:无线)
+		OrderId    int64         `json:"orderId"`    //订单ID
+		OrderTime  time.Duration `json:"orderTime"`  //下单时间(时间戳，毫秒)
+		ParentId   int64         `json:"parentId"`   //父单的订单ID，仅当发生订单拆分时返回， 0：未拆分，有值则表示此订单为子订单
+		PayMonth   int           `json:"payMonth"`   //订单维度预估结算时间（格式：yyyyMMdd），0：未结算，订单的预估结算时间仅供参考。账号未通过资质审核或订单发生售后，会影响订单实际结算时间。
+		Plus       int           `json:"plus"`       //下单用户是否为PLUS会员 0：否，1：是
+		PopId      int           `json:"popId"`      //商家ID
 		SkuList    []struct {
 			//订单包含的商品信息列表
 			ActualCosPrice    float64 `json:"actualCosPrice"`    //实际计算佣金的金额。订单完成后，会将误扣除的运费券金额更正。如订单完成后发生退款，此金额会更新。
@@ -66,8 +72,8 @@ type OrderResult struct {
 			Ext1              string  `json:"ext1"`              //推客生成推广链接时传入的扩展字段（需要联系运营开放白名单才能拿到数据）。&lt;订单行维度&gt;
 			Price             float64 `json:"price"`             //商品单价
 			SkuName           string  `json:"skuName"`           //商品名称
-			SubSideRate       int     `json:"subSideRate"`       //分成比例
-			SubsidyRate       int     `json:"subsidyRate"`       //补贴比例
+			SubSideRate       float64 `json:"subSideRate"`       //分成比例
+			SubsidyRate       float64 `json:"subsidyRate"`       //补贴比例
 		}
 		UnionId   int64  `json:"unionId"`   //推客的联盟ID
 		Ext1      string `json:"ext1"`      //推客生成推广链接时传入的扩展字段，订单维度（需要联系运营开放白名单才能拿到数据）
@@ -84,8 +90,10 @@ func (J *Jdsdk) GetOrders(ParamJsons string) (result *OrderResult) {
 	urls.WriteString(JD_HOST)
 	urls.WriteString(J.SignAndUri)
 	body, _ := HttpGet(urls.String())
+	fmt.Println(urls.String())
 	response := &JdUnionOpenOrderQueryResponse{}
 	e := json.Unmarshal([]byte(body), &response)
+	fmt.Println(response)
 	if e != nil {
 		panic(e)
 	}
