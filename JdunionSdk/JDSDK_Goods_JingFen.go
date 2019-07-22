@@ -20,7 +20,7 @@ type GoodsReq struct {
 	PageIndex int    `json:"pageIndex,omitempty"` //页码
 	PageSize  int    `json:"pageSize,omitempty"`  //每页数量
 	SortName  string `json:"sortName,omitempty"`  //排序字段(price：单价, commissionShare：佣金比例, commission：佣金， inOrderCount30DaysSku：sku维度30天引单量，comments：评论数，goodComments：好评数)
-	Sort      string `json:"sortName,omitempty"`  //asc,desc升降序,默认降序
+	Sort      string `json:"Sort,omitempty"`      //asc,desc升降序,默认降序
 }
 
 type JdUnionOpenGoodsJingfenQueryResponse struct {
