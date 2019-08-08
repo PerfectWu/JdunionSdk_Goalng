@@ -26,7 +26,7 @@ type JdUnionOpenOrderQueryResponse struct {
 	JdUnionOpenOrderQueryResponse struct {
 		Result string `json:"result"`
 		Code   string `json:"code"`
-	} `json:"jd_union_open_order_query _response"`
+	} `json:"jd_union_open_order_query_response"`
 }
 
 type OrderResult struct {
@@ -84,7 +84,7 @@ type OrderResult struct {
 
 //获取订单
 func (J *Jdsdk) GetOrders(ParamJsons string) (result *OrderResult) {
-	Method := "jd.union.open.order.query "
+	Method := "jd.union.open.order.query"
 	J.SetSignJointUrlParam(Method, ParamJsons)
 	var urls strings.Builder
 	urls.WriteString(JD_HOST)
